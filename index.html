@@ -83,8 +83,10 @@ nav{
 .page{
   display:none;
   opacity:0;
-  transform:translateY(8px);
-  transition:opacity 300ms ease, transform 300ms ease;
+  transform:translateY(12px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
 }
 .page.active{
   display:block;
@@ -99,15 +101,20 @@ section{
 }
 
 /* ===== SCROLL FADE ANIMATION (ADDED) ===== */
-.fade-on-scroll{
+/* ===== SCROLL REVEAL ===== */
+.reveal{
   opacity:0;
   transform:translateY(16px);
-  transition:opacity 500ms ease, transform 500ms ease;
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
 }
-.fade-on-scroll.visible{
+
+.reveal.visible{
   opacity:1;
-  transform:none;
+  transform:translateY(0);
 }
+
 
 h1{font-size:40px;margin:0 0 16px}
 h2{font-size:28px;margin-bottom:16px}
@@ -467,6 +474,26 @@ showPage(location.hash.replace("#","")||"home");
 
 renderSkeleton();
 setTimeout(()=>renderList(products),600);
+
+  /* ===== SCROLL REVEAL LOGIC ===== */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+},{threshold:.12});
+
+function applyReveal(){
+  document.querySelectorAll("section, .card, .detail").forEach(el=>{
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+}
+
+/* Apply after initial render */
+setTimeout(applyReveal,700);
+
 
 </script>
 
