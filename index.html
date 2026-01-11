@@ -468,14 +468,6 @@ showPage(location.hash.replace("#","")||"home");
 renderSkeleton();
 setTimeout(()=>renderList(products),600);
 
-/* ===== SCROLL OBSERVER (ADDED) ===== */
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting)e.target.classList.add("visible");
-  });
-},{threshold:.15});
-
-document.querySelectorAll(".fade-on-scroll").forEach(el=>observer.observe(el));
 </script>
 
 </body>
