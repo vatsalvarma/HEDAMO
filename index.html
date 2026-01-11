@@ -1,314 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hedamo — Producer-Declared Product Disclosures</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8" />
+<title>Hedamo – Producer-Declared Disclosures</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <style>
-    /* =========================================================
-       HEDAMO — INSTITUTIONAL DESIGN SYSTEM
-       ========================================================= */
+<style>
+:root {
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --border:#e3e7ee;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --accent:#1d4ed8;
 
-    :root {
-      --bg: #f7f9fb;
-      --surface: #ffffff;
-      --border: #e5e9f0;
+  --draft:#9ca3af;
+  --submitted:#3b82f6;
+  --published:#15803d;
 
-      --text-primary: #1f2933;
-      --text-secondary: #6b7280;
+  --radius:10px;
+  --transition:200ms ease;
+  --shadow:0 10px 24px rgba(0,0,0,.04);
+}
 
-      --accent: #1d4ed8;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-      --draft: #9ca3af;
-      --submitted: #3b82f6;
-      --published: #15803d;
+/* ================= NAVBAR ================= */
 
-      --radius: 10px;
-      --transition: 200ms ease;
-      --shadow-soft: 0 8px 20px rgba(0,0,0,0.04);
-    }
+nav{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#e5e7eb;
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:14px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  font-size:20px;
+  font-weight:600;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  font-size:14px;
+  color:#374151;
+}
+.nav-links a:hover{color:#000}
 
-    * { box-sizing: border-box; }
+/* ================= PAGES ================= */
 
-    html {
-      scroll-behavior: smooth;
-    }
+.page{
+  display:none;
+  animation:fade .25s ease;
+}
+.page.active{display:block}
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
-      line-height: 1.6;
-    }
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 32px;
+}
 
-    a { text-decoration: none; color: inherit; }
+h1{font-size:40px;margin:0 0 16px}
+h2{font-size:28px;margin-bottom:16px}
+p{color:var(--muted);max-width:720px}
 
-    button, input, select {
-      font-family: inherit;
-      font-size: 14px;
-    }
+/* ================= BUTTON ================= */
 
-    button {
-      cursor: pointer;
-    }
+.primary-btn{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:12px 20px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:var(--transition);
+}
+.primary-btn:hover{background:#1e40af}
 
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
+/* ================= CONTROLS ================= */
 
-    /* =========================================================
-       NAVBAR
-       ========================================================= */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:24px;
+}
+.control{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:10px 12px;
+}
+input,select{
+  border:none;
+  outline:none;
+  background:none;
+  font-family:inherit;
+}
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
+/* ================= GRID ================= */
 
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  cursor:pointer;
+  transition:var(--transition);
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+.meta{font-size:13px;color:var(--muted);margin:8px 0 12px}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+}
+.badge{
+  padding:4px 10px;
+  border-radius:999px;
+  color:white;
+}
+.Draft{background:var(--draft)}
+.Submitted{background:var(--submitted)}
+.Published{background:var(--published)}
 
-    .brand {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: 0.2px;
-    }
+/* ================= DETAIL ================= */
 
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
+.detail{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px;
+}
+.back{
+  color:var(--accent);
+  font-size:14px;
+  cursor:pointer;
+}
+.section{margin-top:24px}
+.disclaimer{
+  margin-top:32px;
+  padding:16px;
+  background:#f1f5f9;
+  border-left:4px solid var(--accent);
+  font-size:13px;
+  color:var(--muted);
+}
 
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
+/* ================= STATES ================= */
 
-    /* =========================================================
-       SECTIONS
-       ========================================================= */
+.skeleton{
+  height:120px;
+  border-radius:var(--radius);
+  background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s infinite;
+}
+.empty{text-align:center;color:var(--muted);padding:48px}
 
-    section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 64px 32px;
-    }
-
-    h1 {
-      font-size: 40px;
-      font-weight: 600;
-      margin: 0 0 16px 0;
-    }
-
-    h2 {
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-
-    h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    p {
-      color: var(--text-secondary);
-      max-width: 720px;
-    }
-
-    /* =========================================================
-       HERO
-       ========================================================= */
-
-    .hero {
-      padding-top: 96px;
-      padding-bottom: 96px;
-    }
-
-    .hero p {
-      font-size: 16px;
-      margin-bottom: 32px;
-    }
-
-    .primary-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      padding: 12px 20px;
-      transition: background var(--transition), transform var(--transition);
-    }
-
-    .primary-btn:hover {
-      background: #1e40af;
-      transform: translateY(-1px);
-    }
-
-    /* =========================================================
-       CONTROLS
-       ========================================================= */
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .control {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 12px;
-    }
-
-    input[type="search"] {
-      border: none;
-      outline: none;
-      min-width: 220px;
-    }
-
-    select {
-      border: none;
-      background: transparent;
-      outline: none;
-    }
-
-    /* =========================================================
-       PRODUCT GRID
-       ========================================================= */
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      transition: transform var(--transition), box-shadow var(--transition);
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .meta {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin: 8px 0 12px;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 500;
-      color: white;
-    }
-
-    .Draft { background: var(--draft); }
-    .Submitted { background: var(--submitted); }
-    .Published { background: var(--published); }
-
-    /* =========================================================
-       DETAIL VIEW
-       ========================================================= */
-
-    .detail {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      animation: fadeIn var(--transition);
-    }
-
-    .back {
-      color: var(--accent);
-      font-size: 14px;
-      margin-bottom: 16px;
-      cursor: pointer;
-    }
-
-    .section {
-      margin-top: 24px;
-    }
-
-    .section h4 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .disclaimer {
-      margin-top: 32px;
-      padding: 16px;
-      background: #f1f5f9;
-      border-left: 4px solid var(--accent);
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    /* =========================================================
-       STATES
-       ========================================================= */
-
-    .skeleton {
-      height: 120px;
-      border-radius: var(--radius);
-      background: linear-gradient(
-        90deg,
-        #eceff3 25%,
-        #f5f7fa 37%,
-        #eceff3 63%
-      );
-      background-size: 400% 100%;
-      animation: shimmer 1.4s ease infinite;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 48px;
-      color: var(--text-secondary);
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 100% 0; }
-      100% { background-position: -100% 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+@keyframes shimmer{
+  0%{background-position:100%}
+  100%{background-position:-100%}
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}
+</style>
 </head>
 
 <body>
@@ -320,200 +203,162 @@
       <a href="#home">Home</a>
       <a href="#products">Products</a>
       <a href="#about">About</a>
-      <a href="#contact">Contact</a>
     </div>
   </div>
 </nav>
 
-<section id="home" class="hero">
+<!-- HOME -->
+<div id="home" class="page active">
+<section>
   <h1>Producer-Declared Product Disclosures</h1>
   <p>
-    Hedamo provides a neutral platform where producers publish
-    self-declared product information. All disclosures are presented
-    as provided by producers and are not certified, verified, or endorsed.
+    Hedamo presents information as declared by producers.
+    Disclosures are not certified, verified, or endorsed.
   </p>
-  <a href="#products">
-    <button class="primary-btn">Explore Products</button>
-  </a>
+  <a href="#products"><button class="primary-btn">Explore Products</button></a>
 </section>
+</div>
 
-<section id="products">
-  <h2>Product Listings</h2>
+<!-- PRODUCTS -->
+<div id="products" class="page">
+<section>
+<h2>Product Listings</h2>
 
-  <div class="controls">
-    <div class="control">
-      <input type="search" id="search" placeholder="Search by product or producer" />
-    </div>
-
-    <div class="control">
-      <select id="categoryFilter">
-        <option value="">All categories</option>
-        <option>Medical</option>
-        <option>Financial</option>
-        <option>Infrastructure</option>
-      </select>
-    </div>
-
-    <div class="control">
-      <select id="statusFilter">
-        <option value="">All statuses</option>
-        <option>Draft</option>
-        <option>Submitted</option>
-        <option>Published</option>
-      </select>
-    </div>
-
-    <div class="control">
-      <select id="sort">
-        <option value="date">Sort by last updated</option>
-        <option value="name">Sort by name</option>
-      </select>
-    </div>
+<div class="controls">
+  <div class="control"><input id="search" placeholder="Search products or producers"></div>
+  <div class="control">
+    <select id="categoryFilter">
+      <option value="">All categories</option>
+      <option>Medical</option>
+      <option>Financial</option>
+      <option>Infrastructure</option>
+    </select>
   </div>
+  <div class="control">
+    <select id="statusFilter">
+      <option value="">All statuses</option>
+      <option>Draft</option>
+      <option>Submitted</option>
+      <option>Published</option>
+    </select>
+  </div>
+  <div class="control">
+    <select id="sort">
+      <option value="date">Sort by date</option>
+      <option value="name">Sort by name</option>
+    </select>
+  </div>
+</div>
 
-  <div id="grid" class="grid"></div>
+<div id="grid" class="grid"></div>
 </section>
+</div>
 
-<section id="about">
-  <h2>About Hedamo</h2>
-  <p>
-    Hedamo is a disclosure system designed to surface producer-reported
-    product information in a clear, consistent, and transparent manner.
-    Hedamo does not verify accuracy, completeness, or quality of disclosures.
-  </p>
+<!-- ABOUT -->
+<div id="about" class="page">
+<section>
+<h2>About Hedamo</h2>
+<p>
+Hedamo is a disclosure platform designed to surface producer-reported
+information with clarity and restraint. Hedamo does not verify accuracy
+or completeness of submitted data.
+</p>
 </section>
-
-<section id="contact">
-  <h2>Contact</h2>
-  <p>
-    For platform-related inquiries, please contact the Hedamo support team.
-    Product-specific questions should be directed to the respective producer.
-  </p>
-</section>
+</div>
 
 <script>
-  const products = [
-    {
-      id: 1,
-      name: "Clinical Data Exchange",
-      category: "Medical",
-      producer: "HealthCorp",
-      status: "Published",
-      updated: "2026-01-04",
-      declaredBy: "HealthCorp Compliance Team",
-      evidence: 3,
-      versions: [
-        { date: "2025-11-10", status: "Submitted" },
-        { date: "2026-01-04", status: "Published" }
-      ]
-    },
-    {
-      id: 2,
-      name: "Municipal Finance Ledger",
-      category: "Financial",
-      producer: "Civic Systems Ltd.",
-      status: "Submitted",
-      updated: "2026-01-01",
-      declaredBy: "Civic Systems",
-      evidence: 1,
-      versions: [
-        { date: "2025-12-01", status: "Draft" },
-        { date: "2026-01-01", status: "Submitted" }
-      ]
-    }
-  ];
+const products=[
+{ name:"Clinical Data Exchange",category:"Medical",producer:"HealthCorp",status:"Published",updated:"2026-01-04",declaredBy:"HealthCorp",evidence:3,versions:[{date:"2025-11-10",status:"Submitted"},{date:"2026-01-04",status:"Published"}]},
+{ name:"Patient Record Sync",category:"Medical",producer:"MediLink",status:"Draft",updated:"2025-12-22",declaredBy:"MediLink",evidence:0,versions:[{date:"2025-12-22",status:"Draft"},{date:"2026-01-02",status:"Draft"}]},
+{ name:"Municipal Finance Ledger",category:"Financial",producer:"Civic Systems",status:"Submitted",updated:"2026-01-01",declaredBy:"Civic Systems",evidence:1,versions:[{date:"2025-12-01",status:"Draft"},{date:"2026-01-01",status:"Submitted"}]},
+{ name:"Tax Reporting Portal",category:"Financial",producer:"GovTech Labs",status:"Published",updated:"2025-12-28",declaredBy:"GovTech Labs",evidence:2,versions:[{date:"2025-10-10",status:"Submitted"},{date:"2025-12-28",status:"Published"}]},
+{ name:"Transport Asset Registry",category:"Infrastructure",producer:"InfraWorks",status:"Draft",updated:"2025-12-10",declaredBy:"InfraWorks",evidence:0,versions:[{date:"2025-12-10",status:"Draft"},{date:"2025-12-20",status:"Draft"}]},
+{ name:"Utility Usage Monitor",category:"Infrastructure",producer:"GridSense",status:"Submitted",updated:"2026-01-03",declaredBy:"GridSense",evidence:1,versions:[{date:"2025-11-20",status:"Draft"},{date:"2026-01-03",status:"Submitted"}]},
+{ name:"Claims Processing Engine",category:"Medical",producer:"CareLogic",status:"Published",updated:"2025-12-30",declaredBy:"CareLogic",evidence:4,versions:[{date:"2025-10-30",status:"Submitted"},{date:"2025-12-30",status:"Published"}]},
+{ name:"Budget Forecast Tool",category:"Financial",producer:"FiscalOne",status:"Draft",updated:"2026-01-05",declaredBy:"FiscalOne",evidence:0,versions:[{date:"2026-01-02",status:"Draft"},{date:"2026-01-05",status:"Draft"}]}
+];
 
-  const grid = document.getElementById("grid");
+const grid=document.getElementById("grid");
 
-  function renderSkeleton() {
-    grid.innerHTML = "";
-    for (let i = 0; i < 4; i++) {
-      const sk = document.createElement("div");
-      sk.className = "skeleton";
-      grid.appendChild(sk);
-    }
-  }
+function renderSkeleton(){
+grid.innerHTML="";
+for(let i=0;i<4;i++){
+  const d=document.createElement("div");
+  d.className="skeleton";
+  grid.appendChild(d);
+}}
 
-  function renderList(list) {
-    grid.innerHTML = "";
-    if (!list.length) {
-      grid.innerHTML = `<div class="empty">No products match the selected filters.</div>`;
-      return;
-    }
+function renderList(list){
+grid.innerHTML="";
+if(!list.length){
+  grid.innerHTML=`<div class="empty">No products match the selected criteria.</div>`;
+  return;
+}
+list.forEach(p=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.innerHTML=`
+    <h3>${p.name}</h3>
+    <div class="meta">${p.category} · ${p.producer}</div>
+    <div class="footer">
+      <span class="badge ${p.status}">${p.status}</span>
+      <span>${p.updated}</span>
+    </div>`;
+  c.onclick=()=>showDetail(p);
+  grid.appendChild(c);
+});
+}
 
-    list.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.tabIndex = 0;
-      card.innerHTML = `
-        <h3>${p.name}</h3>
-        <div class="meta">${p.category} · ${p.producer}</div>
-        <div class="footer">
-          <span class="badge ${p.status}">${p.status}</span>
-          <span>${p.updated}</span>
-        </div>
-      `;
-      card.onclick = () => showDetail(p);
-      grid.appendChild(card);
-    });
-  }
+function showDetail(p){
+grid.innerHTML=`
+<div class="detail">
+  <div class="back" onclick="renderList(products)">← Back to list</div>
+  <h2>${p.name}</h2>
 
-  function showDetail(p) {
-    grid.innerHTML = `
-      <div class="detail">
-        <div class="back" onclick="renderList(products)">← Back to product list</div>
-        <h2>${p.name}</h2>
+  <div class="section">
+    <strong>Disclosure summary</strong><br>
+    Declared by: ${p.declaredBy}<br>
+    Declaration date: ${p.updated}<br>
+    Evidence attached by producer: ${p.evidence}
+  </div>
 
-        <div class="section">
-          <h4>Disclosure Summary</h4>
-          <div>Declared by: ${p.declaredBy}</div>
-          <div>Declaration date: ${p.updated}</div>
-          <div>Evidence attached by producer: ${p.evidence}</div>
-        </div>
+  <div class="section">
+    <strong>Version history</strong><br>
+    ${p.versions.map(v=>`${v.date} — ${v.status}`).join("<br>")}
+  </div>
 
-        <div class="section">
-          <h4>Version History</h4>
-          ${p.versions.map(v => `<div>${v.date} — ${v.status}</div>`).join("")}
-        </div>
+  <div class="disclaimer">
+    This page presents producer-declared information; it is not certification or verification.
+  </div>
+</div>`;
+}
 
-        <div class="disclaimer">
-          This page presents producer-declared information; it is not certification or verification.
-        </div>
-      </div>
-    `;
-  }
+function applyFilters(){
+let list=[...products];
+const q=search.value.toLowerCase();
+if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||p.producer.toLowerCase().includes(q));
+if(categoryFilter.value) list=list.filter(p=>p.category===categoryFilter.value);
+if(statusFilter.value) list=list.filter(p=>p.status===statusFilter.value);
+list.sort(sort.value==="name"
+  ?(a,b)=>a.name.localeCompare(b.name)
+  :(a,b)=>new Date(b.updated)-new Date(a.updated)
+);
+renderList(list);
+}
 
-  function applyFilters() {
-    let list = [...products];
-    const q = search.value.toLowerCase();
-    const cat = categoryFilter.value;
-    const status = statusFilter.value;
-    const sort = document.getElementById("sort").value;
+document.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",applyFilters));
 
-    if (q) {
-      list = list.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        p.producer.toLowerCase().includes(q)
-      );
-    }
-    if (cat) list = list.filter(p => p.category === cat);
-    if (status) list = list.filter(p => p.status === status);
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
 
-    list.sort((a, b) =>
-      sort === "name"
-        ? a.name.localeCompare(b.name)
-        : new Date(b.updated) - new Date(a.updated)
-    );
+window.addEventListener("hashchange",()=>{
+showPage(location.hash.replace("#","")||"home");
+});
 
-    renderList(list);
-  }
-
-  document.querySelectorAll("input, select").forEach(el =>
-    el.addEventListener("input", applyFilters)
-  );
-
-  renderSkeleton();
-  setTimeout(() => renderList(products), 600);
+renderSkeleton();
+setTimeout(()=>renderList(products),600);
 </script>
 
 </body>
