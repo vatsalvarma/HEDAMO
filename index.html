@@ -6,6 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
+
+  @view-transition {
+  navigation: auto;
+}
+
 :root {
   --bg:#f6f8fb;
   --surface:#ffffff;
@@ -80,19 +85,22 @@ nav{
 
 /* ================= PAGES ================= */
 
+/* ===== SMOOTH PAGE SWITCH (ADDED) ===== */
 .page{
-  display:none;
   opacity:0;
-  transform:translateY(12px);
+  transform:translateY(20px);
   transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+    opacity 450ms cubic-bezier(.4,0,.2,1),
+    transform 450ms cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
 }
+
 .page.active{
-  display:block;
   opacity:1;
   transform:translateY(0);
+  pointer-events:auto;
 }
+
 
 section{
   max-width:1200px;
