@@ -1,5 +1,3 @@
-<script>
-  
 const products=[
 { name:"Clinical Data Exchange",category:"Medical",producer:"HealthCorp",status:"Published",updated:"2026-01-04",declaredBy:"HealthCorp",evidence:3,image:"clinic.png",versions:[{date:"2025-11-10",status:"Submitted"},{date:"2026-01-04",status:"Published"}]},
 { name:"Patient Record Sync",category:"Medical",producer:"MediLink",status:"Draft",updated:"2025-12-22",declaredBy:"MediLink",evidence:0,image:"https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",versions:[{date:"2025-12-22",status:"Draft"},{date:"2026-01-02",status:"Draft"}]},
@@ -113,4 +111,3 @@ function applyReveal(){
 
 /* Apply after initial render */
 setTimeout(applyReveal,700);
-</script>
