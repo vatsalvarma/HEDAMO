@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Institutional Product Registry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    /* ===============================
+       Design System Foundations
+       =============================== */
+
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --border: #e4e7ec;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --accent: #2563eb;
+
+      --draft: #9ca3af;
+      --submitted: #3b82f6;
+      --published: #16a34a;
+
+      --radius: 10px;
+      --transition: 200ms ease;
+      --shadow-soft: 0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, select, input {
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    /* ===============================
+       Layout
+       =============================== */
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ===============================
+       Controls
+       =============================== */
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .control {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      transition: border var(--transition);
+    }
+
+    .control:focus-within {
+      border-color: var(--accent);
+    }
+
+    input[type="search"] {
+      border: none;
+      outline: none;
+      min-width: 220px;
+    }
+
+    select {
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+
+    /* ===============================
+       Product Grid
+       =============================== */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .card:hover,
+    .card:focus {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .Draft { background: var(--draft); }
+    .Submitted { background: var(--submitted); }
+    .Published { background: var(--published); }
+
+    /* ===============================
+       Detail View
+       =============================== */
+
+    .detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      animation: fadeIn var(--transition);
+    }
+
+    .back {
+      margin-bottom: 16px;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section h4 {
+      margin: 0 0 8px 0;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .disclaimer {
+      margin-top: 24px;
+      padding: 12px;
+      background: #f1f5f9;
+      border-left: 4px solid var(--accent);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ===============================
+       States
+       =============================== */
+
+    .skeleton {
+      height: 120px;
+      border-radius: var(--radius);
+      background: linear-gradient(
+        90deg,
+        #eee 25%,
+        #f5f5f5 37%,
+        #eee 63%
+      );
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-secondary);
+    }
+
+    /* ===============================
+       Animations
+       =============================== */
+
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header>
+      <h1>Product Registry</h1>
+      <div class="subtitle">
+        Producer-declared product disclosures for institutional review
+      </div>
+    </header>
+
+    <div id="listView">
+      <div class="controls">
+        <div class="control">
+          <input type="search" id="search" placeholder="Search products…" />
+        </div>
+
+        <div class="control">
+          <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option>Medical</option>
+            <option>Financial</option>
+            <option>Infrastructure</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option>Draft</option>
+            <option>Submitted</option>
+            <option>Published</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <select id="sort">
+            <option value="date">Sort by Date</option>
+            <option value="name">Sort by Name</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+    </div>
+
+    <div id="detailView" style="display:none;"></div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Clinical Data Platform",
+        category: "Medical",
+        producer: "HealthCorp",
+        status: "Published",
+        updated: "2026-01-04",
+        declaredBy: "HealthCorp Compliance",
+        evidence: 4,
+        versions: [
+          { date: "2025-11-02", status: "Submitted" },
+          { date: "2026-01-04", status: "Published" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Municipal Finance Suite",
+        category: "Financial",
+        producer: "Civic Systems Ltd.",
+        status: "Submitted",
+        updated: "2026-01-01",
+        declaredBy: "Civic Systems",
+        evidence: 2,
+        versions: [
+          { date: "2025-12-12", status: "Draft" },
+          { date: "2026-01-01", status: "Submitted" }
+        ]
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+    const detailView = document.getElementById("detailView");
+    const listView = document.getElementById("listView");
+
+    function renderSkeleton() {
+      grid.innerHTML = "";
+      for (let i = 0; i < 4; i++) {
+        const skel = document.createElement("div");
+        skel.className = "skeleton";
+        grid.appendChild(skel);
+      }
+    }
+
+    function renderList(items) {
+      grid.innerHTML = "";
+      if (!items.length) {
+        grid.innerHTML = `<div class="empty">No products match your criteria.</div>`;
+        return;
+      }
+
+      items.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.tabIndex = 0;
+        card.innerHTML = `
+          <h3>${p.name}</h3>
+          <div class="meta">${p.category} · ${p.producer}</div>
+          <div class="footer">
+            <span class="badge ${p.status}">${p.status}</span>
+            <span>${p.updated}</span>
+          </div>
+        `;
+        card.onclick = () => showDetail(p);
+        grid.appendChild(card);
+      });
+    }
+
+    function showDetail(p) {
+      listView.style.display = "none";
+      detailView.style.display = "block";
+      detailView.innerHTML = `
+        <div class="detail">
+          <div class="back" onclick="goBack()">← Back to list</div>
+          <h2>${p.name}</h2>
+
+          <div class="section">
+            <h4>Disclosure Summary</h4>
+            <div>Declared by: ${p.declaredBy}</div>
+            <div>Declared on: ${p.updated}</div>
+            <div>Evidence attached: ${p.evidence}</div>
+          </div>
+
+          <div class="section">
+            <h4>Version History</h4>
+            ${p.versions.map(v => `<div>${v.date} — ${v.status}</div>`).join("")}
+          </div>
+
+          <div class="disclaimer">
+            This page presents producer-declared information; it is not certification or verification.
+          </div>
+        </div>
+      `;
+    }
+
+    function goBack() {
+      detailView.style.display = "none";
+      listView.style.display = "block";
+    }
+
+    function applyFilters() {
+      let filtered = [...products];
+      const q = search.value.toLowerCase();
+      const cat = categoryFilter.value;
+      const status = statusFilter.value;
+      const sort = document.getElementById("sort").value;
+
+      if (q) {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.producer.toLowerCase().includes(q)
+        );
+      }
+
+      if (cat) filtered = filtered.filter(p => p.category === cat);
+      if (status) filtered = filtered.filter(p => p.status === status);
+
+      filtered.sort((a, b) =>
+        sort === "name"
+          ? a.name.localeCompare(b.name)
+          : new Date(b.updated) - new Date(a.updated)
+      );
+
+      renderList(filtered);
+    }
+
+    document.querySelectorAll("input, select").forEach(el =>
+      el.addEventListener("input", applyFilters)
+    );
+
+    renderSkeleton();
+    setTimeout(() => renderList(products), 600);
+  </script>
+</body>
+</html>
