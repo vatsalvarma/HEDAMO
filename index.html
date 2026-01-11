@@ -2,222 +2,227 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Hedamo — Producer Disclosures</title>
+<title>Hedamo – Producer-Declared Disclosures</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
-/* =====================
-   DESIGN TOKENS
-===================== */
 :root {
-  --bg-overlay: rgba(20, 24, 28, 0.78);
-  --gray-900: #1f2933;
-  --gray-800: #2d3748;
-  --gray-700: #4a5568;
-  --gray-500: #a0aec0;
-  --gray-300: #e2e8f0;
-  --accent: #3b82f6;
-  --draft: #94a3b8;
-  --submitted: #60a5fa;
-  --published: #2563eb;
-  --radius: 12px;
-  --transition: 200ms ease;
-  --font: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --border:#e3e7ee;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --accent:#1d4ed8;
+
+  --draft:#9ca3af;
+  --submitted:#3b82f6;
+  --published:#15803d;
+
+  --radius:10px;
+  --transition:200ms ease;
+  --shadow:0 10px 24px rgba(0,0,0,.04);
 }
 
-/* =====================
-   GLOBAL
-===================== */
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: var(--font);
-  color: #f8fafc;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  position:relative;
+}
+
+/* ===== BACKGROUND IMAGE OVERLAY (ADDED) ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
   background:
-    linear-gradient(var(--bg-overlay), var(--bg-overlay)),
-    url("https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1920") center/cover fixed;
+    linear-gradient(rgba(246,248,251,.92),rgba(246,248,251,.92)),
+    url("https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1920")
+    center/cover no-repeat;
+  z-index:-1;
 }
 
-/* =====================
-   NAVBAR
-===================== */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(31, 41, 51, 0.95);
-  backdrop-filter: blur(8px);
+/* ================= NAVBAR ================= */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#e5e7eb;
+  border-bottom:1px solid var(--border);
 }
-.nav-inner {
-  max-width: 1200px;
-  margin: auto;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.nav-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:14px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.logo {
-  font-weight: 600;
-  font-size: 20px;
-  letter-spacing: 0.4px;
+.brand{
+  font-size:20px;
+  font-weight:600;
 }
-.nav-links button {
-  background: none;
-  border: none;
-  color: #e5e7eb;
-  margin-left: 24px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color var(--transition);
+.nav-links{
+  display:flex;
+  gap:24px;
 }
-.nav-links button:hover,
-.nav-links button:focus {
-  color: var(--accent);
-  outline: none;
+.nav-links a{
+  font-size:14px;
+  color:#374151;
+}
+.nav-links a:hover{color:#000}
+
+/* ================= PAGES ================= */
+
+.page{
+  display:none;
+  animation:fade .25s ease;
+}
+.page.active{display:block}
+
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 32px;
 }
 
-/* =====================
-   SECTIONS
-===================== */
-section {
-  display: none;
-  max-width: 1200px;
-  margin: auto;
-  padding: 64px 24px;
-}
-section.active { display: block; }
+h1{font-size:40px;margin:0 0 16px}
+h2{font-size:28px;margin-bottom:16px}
+p{color:var(--muted);max-width:720px}
 
-/* =====================
-   HOME
-===================== */
-.hero {
-  max-width: 640px;
+/* ================= BUTTON ================= */
+
+.primary-btn{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:12px 20px;
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:var(--transition);
 }
-.hero h1 {
-  font-size: 44px;
-  margin-bottom: 16px;
+.primary-btn:hover{background:#1e40af}
+
+/* ================= CONTROLS ================= */
+
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:24px;
 }
-.hero p {
-  color: var(--gray-300);
-  line-height: 1.6;
+.control{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:10px 12px;
 }
-.hero button {
-  margin-top: 24px;
-  padding: 12px 24px;
-  border-radius: var(--radius);
-  border: none;
-  background: var(--accent);
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.hero button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(59,130,246,0.3);
+input,select{
+  border:none;
+  outline:none;
+  background:none;
+  font-family:inherit;
 }
 
-/* =====================
-   FILTER BAR
-===================== */
-.filters {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-.filters input,
-.filters select {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 10px 12px;
-  color: white;
-  border-radius: 8px;
-}
-.filters input::placeholder { color: var(--gray-500); }
+/* ================= GRID ================= */
 
-/* =====================
-   PRODUCT GRID
-===================== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap: 24px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  cursor:pointer;
+  transition:var(--transition);
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
 }
 
-.card {
-  background: rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform var(--transition), box-shadow var(--transition);
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-}
-.card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-}
-.card-body {
-  padding: 16px;
-}
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-.meta {
-  font-size: 13px;
-  color: var(--gray-300);
-}
-.badge {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-}
-.badge.Draft { background: var(--draft); }
-.badge.Submitted { background: var(--submitted); }
-.badge.Published { background: var(--published); }
-
-/* =====================
-   MODAL
-===================== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.modal.active { display: flex; }
-.modal-content {
-  background: #0f172a;
-  padding: 32px;
-  border-radius: var(--radius);
-  max-width: 520px;
-  width: 90%;
-}
-.modal-content h2 { margin-top: 0; }
-.modal-content p { color: var(--gray-300); }
-.close {
-  float: right;
-  cursor: pointer;
-  font-size: 18px;
+/* ===== PRODUCT IMAGE (ADDED) ===== */
+.card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:12px;
 }
 
-/* =====================
-   ABOUT
-===================== */
-.about {
-  max-width: 700px;
-  color: var(--gray-300);
-  line-height: 1.7;
+.meta{font-size:13px;color:var(--muted);margin:8px 0 12px}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+}
+.badge{
+  padding:4px 10px;
+  border-radius:999px;
+  color:white;
+}
+.Draft{background:var(--draft)}
+.Submitted{background:var(--submitted)}
+.Published{background:var(--published)}
+
+/* ================= DETAIL ================= */
+
+.detail{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px;
+}
+
+/* ===== DETAIL IMAGE (ADDED) ===== */
+.detail img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:16px;
+}
+
+.back{
+  color:var(--accent);
+  font-size:14px;
+  cursor:pointer;
+}
+.section{margin-top:24px}
+.disclaimer{
+  margin-top:32px;
+  padding:16px;
+  background:#f1f5f9;
+  border-left:4px solid var(--accent);
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* ================= STATES ================= */
+
+.skeleton{
+  height:120px;
+  border-radius:var(--radius);
+  background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s infinite;
+}
+.empty{text-align:center;color:var(--muted);padding:48px}
+
+@keyframes shimmer{
+  0%{background-position:100%}
+  100%{background-position:-100%}
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -226,30 +231,43 @@ section.active { display: block; }
 
 <nav>
   <div class="nav-inner">
-    <div class="logo">Hedamo</div>
+    <div class="brand">Hedamo</div>
     <div class="nav-links">
-      <button onclick="showPage('home')">Home</button>
-      <button onclick="showPage('products')">Products</button>
-      <button onclick="showPage('about')">About</button>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
     </div>
   </div>
 </nav>
 
-<section id="home" class="active">
-  <div class="hero">
-    <h1>Producer-Declared Product Disclosures</h1>
-    <p>
-      Hedamo provides a calm, structured interface for producers to disclose
-      product information transparently. All information presented is
-      producer-reported and not verified or certified.
-    </p>
-    <button onclick="showPage('products')">Explore Products</button>
-  </div>
+<!-- HOME -->
+<div id="home" class="page active">
+<section>
+  <h1>Producer-Declared Product Disclosures</h1>
+  <p>
+    Hedamo presents information as declared by producers.
+    Disclosures are not certified, verified, or endorsed.
+  </p>
+  <a href="#products"><button class="primary-btn">Explore Products</button></a>
 </section>
+</div>
 
-<section id="products">
-  <div class="filters">
-    <input id="search" placeholder="Search by product or producer" />
+<!-- PRODUCTS -->
+<div id="products" class="page">
+<section>
+<h2>Product Listings</h2>
+
+<div class="controls">
+  <div class="control"><input id="search" placeholder="Search products or producers"></div>
+  <div class="control">
+    <select id="categoryFilter">
+      <option value="">All categories</option>
+      <option>Medical</option>
+      <option>Financial</option>
+      <option>Infrastructure</option>
+    </select>
+  </div>
+  <div class="control">
     <select id="statusFilter">
       <option value="">All statuses</option>
       <option>Draft</option>
@@ -257,98 +275,125 @@ section.active { display: block; }
       <option>Published</option>
     </select>
   </div>
-
-  <div class="grid" id="productGrid"></div>
-</section>
-
-<section id="about">
-  <div class="about">
-    <h2>About Hedamo</h2>
-    <p>
-      Hedamo is a disclosure platform. Producers independently declare
-      information related to their products. Hedamo does not validate,
-      certify, verify, or endorse any disclosed content.
-    </p>
-    <p>
-      This system prioritizes transparency, clarity, and responsible
-      communication without implying institutional approval.
-    </p>
-  </div>
-</section>
-
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">✕</span>
-    <div id="modalBody"></div>
+  <div class="control">
+    <select id="sort">
+      <option value="date">Sort by date</option>
+      <option value="name">Sort by name</option>
+    </select>
   </div>
 </div>
 
+<div id="grid" class="grid"></div>
+</section>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="page">
+<section>
+<h2>About Hedamo</h2>
+<p>
+Hedamo is a disclosure platform designed to surface producer-reported
+information with clarity and restraint. Hedamo does not verify accuracy
+or completeness of submitted data.
+</p>
+</section>
+</div>
+
 <script>
-const products = [
-  { name:"Eco Packaging", category:"Sustainability", producer:"GreenPack Ltd", status:"Published", date:"2024-12-18", img:"https://images.unsplash.com/photo-1581092160562-40aa08e78837" },
-  { name:"Health Tracker", category:"Healthcare", producer:"MediCore", status:"Submitted", date:"2024-12-11", img:"https://images.unsplash.com/photo-1576678927484-cc907957088c" },
-  { name:"Solar Panel X", category:"Energy", producer:"SunGrid", status:"Published", date:"2024-11-28", img:"https://images.unsplash.com/photo-1509395176047-4a66953fd231" },
-  { name:"Smart Meter", category:"Utilities", producer:"GridTech", status:"Draft", date:"2024-12-02", img:"https://images.unsplash.com/photo-1581093458791-9d15482778c7" },
-  { name:"EV Charger", category:"Transport", producer:"VoltWay", status:"Published", date:"2024-10-22", img:"https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b" },
-  { name:"Water Purifier", category:"Utilities", producer:"PureFlow", status:"Submitted", date:"2024-09-30", img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952" },
-  { name:"Medical Gloves", category:"Healthcare", producer:"SafeHands", status:"Draft", date:"2024-12-05", img:"https://images.unsplash.com/photo-1588776814546-1ffcf47267a5" },
-  { name:"Recycled Paper", category:"Sustainability", producer:"EcoSheets", status:"Published", date:"2024-08-14", img:"https://images.unsplash.com/photo-1586282391129-76a6df230234" }
+const products=[
+{ name:"Clinical Data Exchange",category:"Medical",producer:"HealthCorp",status:"Published",updated:"2026-01-04",declaredBy:"HealthCorp",evidence:3,image:"https://images.unsplash.com/photo-1581093458791-9d15482778c7",versions:[{date:"2025-11-10",status:"Submitted"},{date:"2026-01-04",status:"Published"}]},
+{ name:"Patient Record Sync",category:"Medical",producer:"MediLink",status:"Draft",updated:"2025-12-22",declaredBy:"MediLink",evidence:0,image:"https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",versions:[{date:"2025-12-22",status:"Draft"},{date:"2026-01-02",status:"Draft"}]},
+{ name:"Municipal Finance Ledger",category:"Financial",producer:"Civic Systems",status:"Submitted",updated:"2026-01-01",declaredBy:"Civic Systems",evidence:1,image:"https://images.unsplash.com/photo-1554224155-6726b3ff858f",versions:[{date:"2025-12-01",status:"Draft"},{date:"2026-01-01",status:"Submitted"}]},
+{ name:"Tax Reporting Portal",category:"Financial",producer:"GovTech Labs",status:"Published",updated:"2025-12-28",declaredBy:"GovTech Labs",evidence:2,image:"https://images.unsplash.com/photo-1554224154-22dec7ec8818",versions:[{date:"2025-10-10",status:"Submitted"},{date:"2025-12-28",status:"Published"}]},
+{ name:"Transport Asset Registry",category:"Infrastructure",producer:"InfraWorks",status:"Draft",updated:"2025-12-10",declaredBy:"InfraWorks",evidence:0,image:"https://images.unsplash.com/photo-1509395176047-4a66953fd231",versions:[{date:"2025-12-10",status:"Draft"},{date:"2025-12-20",status:"Draft"}]},
+{ name:"Utility Usage Monitor",category:"Infrastructure",producer:"GridSense",status:"Submitted",updated:"2026-01-03",declaredBy:"GridSense",evidence:1,image:"https://images.unsplash.com/photo-1581092160562-40aa08e78837",versions:[{date:"2025-11-20",status:"Draft"},{date:"2026-01-03",status:"Submitted"}]},
+{ name:"Claims Processing Engine",category:"Medical",producer:"CareLogic",status:"Published",updated:"2025-12-30",declaredBy:"CareLogic",evidence:4,image:"https://images.unsplash.com/photo-1576678927484-cc907957088c",versions:[{date:"2025-10-30",status:"Submitted"},{date:"2025-12-30",status:"Published"}]},
+{ name:"Budget Forecast Tool",category:"Financial",producer:"FiscalOne",status:"Draft",updated:"2026-01-05",declaredBy:"FiscalOne",evidence:0,image:"https://images.unsplash.com/photo-1581093458791-9d15482778c7",versions:[{date:"2026-01-02",status:"Draft"},{date:"2026-01-05",status:"Draft"}]}
 ];
 
-const grid = document.getElementById("productGrid");
+const grid=document.getElementById("grid");
 
-function render() {
-  grid.innerHTML = "";
-  const q = search.value.toLowerCase();
-  const status = statusFilter.value;
+function renderSkeleton(){
+grid.innerHTML="";
+for(let i=0;i<4;i++){
+  const d=document.createElement("div");
+  d.className="skeleton";
+  grid.appendChild(d);
+}}
 
-  const filtered = products.filter(p =>
-    (!status || p.status === status) &&
-    (p.name.toLowerCase().includes(q) || p.producer.toLowerCase().includes(q))
-  );
-
-  if (!filtered.length) {
-    grid.innerHTML = "<p>No products match current filters.</p>";
-    return;
-  }
-
-  filtered.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.tabIndex = 0;
-    card.innerHTML = `
-      <img src="${p.img}">
-      <div class="card-body">
-        <h3>${p.name}</h3>
-        <div class="meta">${p.category} · ${p.producer}</div>
-        <div class="meta">Last updated: ${p.date}</div>
-        <span class="badge ${p.status}">${p.status}</span>
-      </div>`;
-    card.onclick = () => openModal(p);
-    grid.appendChild(card);
-  });
+function renderList(list){
+grid.innerHTML="";
+if(!list.length){
+  grid.innerHTML=`<div class="empty">No products match the selected criteria.</div>`;
+  return;
+}
+list.forEach(p=>{
+  const c=document.createElement("div");
+  c.className="card";
+  c.innerHTML=`
+    <img src="${p.image}">
+    <h3>${p.name}</h3>
+    <div class="meta">${p.category} · ${p.producer}</div>
+    <div class="footer">
+      <span class="badge ${p.status}">${p.status}</span>
+      <span>${p.updated}</span>
+    </div>`;
+  c.onclick=()=>showDetail(p);
+  grid.appendChild(c);
+});
 }
 
-function openModal(p) {
-  modal.classList.add("active");
-  modalBody.innerHTML = `
-    <h2>${p.name}</h2>
-    <p><strong>Declared by:</strong> ${p.producer}</p>
-    <p><strong>Date declared:</strong> ${p.date}</p>
-    <p><strong>Evidence attached:</strong> 2 files (producer-reported)</p>
-    <p><em>This page presents producer-declared information; it is not certification or verification.</em></p>
-  `;
-}
-function closeModal() { modal.classList.remove("active"); }
+function showDetail(p){
+grid.innerHTML=`
+<div class="detail">
+  <div class="back" onclick="renderList(products)">← Back to list</div>
+  <img src="${p.image}">
+  <h2>${p.name}</h2>
 
-function showPage(id) {
-  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+  <div class="section">
+    <strong>Disclosure summary</strong><br>
+    Declared by: ${p.declaredBy}<br>
+    Declaration date: ${p.updated}<br>
+    Evidence attached by producer: ${p.evidence}
+  </div>
+
+  <div class="section">
+    <strong>Version history</strong><br>
+    ${p.versions.map(v=>`${v.date} — ${v.status}`).join("<br>")}
+  </div>
+
+  <div class="disclaimer">
+    This page presents producer-declared information; it is not certification or verification.
+  </div>
+</div>`;
 }
 
-search.oninput = render;
-statusFilter.onchange = render;
-render();
+function applyFilters(){
+let list=[...products];
+const q=search.value.toLowerCase();
+if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||p.producer.toLowerCase().includes(q));
+if(categoryFilter.value) list=list.filter(p=>p.category===categoryFilter.value);
+if(statusFilter.value) list=list.filter(p=>p.status===statusFilter.value);
+list.sort(sort.value==="name"
+  ?(a,b)=>a.name.localeCompare(b.name)
+  :(a,b)=>new Date(b.updated)-new Date(a.updated)
+);
+renderList(list);
+}
+
+document.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",applyFilters));
+
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+window.addEventListener("hashchange",()=>{
+showPage(location.hash.replace("#","")||"home");
+});
+
+renderSkeleton();
+setTimeout(()=>renderList(products),600);
 </script>
 
 </body>
