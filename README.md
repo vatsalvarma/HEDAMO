@@ -4,7 +4,7 @@ Demo Visit: https://vatsalvarma.github.io/HEDAMO/
 
 ## 🧠 Project Overview
 
-**Hedamo** is a user interface that demonstrates how a structured disclosure system can present product information reported by producers. Rather than verifying or certifying product claims, the system displays disclosures as provided — helping users explore product data while maintaining clarity about the limits of accuracy and endorsement. :contentReference[oaicite:2]{index=2}
+**Hedamo** is a user interface that demonstrates how a structured disclosure system can present product information reported by producers. Rather than verifying or certifying product claims, the system displays disclosures as provided — helping users explore product data while maintaining clarity about the limits of accuracy and endorsement.
 
 This project was built as part of a frontend developer assessment to show skills in UI design, data interaction, responsive layout, and professional frontend craft.
 
